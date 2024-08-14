@@ -15,6 +15,7 @@ const Register = () =>{
     const [senha, setSenha] = useState('')
   
     const createUser = ()=>{
+        event.preventDefault();
         Axios.post('http://localhost:3002/register', {
             Email: email,
             UserName: userName,

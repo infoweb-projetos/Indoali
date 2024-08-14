@@ -3,6 +3,9 @@ const app = express();
 const sqlite3 = require('sqlite3');
 const cors = require('cors');
 
+//const jwt = require('jsonwebtoken');
+//const bcrypt = require('bcrypt');
+
 app.use(express.json());
 app.use(cors());
 
@@ -42,23 +45,50 @@ app.post('/register', (req, res) => {
     });
 });
 
-app.post('/Login', (req, res) => {
-    const sentLoginUserName = req.body.LoginUserName;
-    const sentLoginSenha = req.body.LoginSenha;
+app.post('/login', (req, res) => {
+    const { Email, Senha } = req.body;
 
-    const SQL = 'SELECT * FROM usuarios WHERE Username = ? AND Senha = ?'; 
-    const Values = [sentLoginUserName, sentLoginSenha];
+    const SQL = 'SELECT * FROM usuarios WHERE Email = ? AND Senha = ?';
+    const Values = [Email, Senha];
 
     db.all(SQL, Values, (error, rows) => {
         if (error) {
-            res.send({ error: error })
+            console.error('Erro ao consultar usuários:', error.message);
+            res.status(500).send(error.message);
         } else if (rows.length > 0) {
-            res.send(rows[0])
-        } else {
-            res.send({ message: 'Erro nas credenciais' }) 
+            res.send(rows[0]);
+        } else {    
+            res.status(401).send({ message: 'Credenciais inválidas' });
         }
     });
 });
+
+//const authenticateToken = (req, res, next) => {
+//    const token = req.headers['authorization'];
+//    if (!token) return res.sendStatus(401);
+//
+//    jwt.verify(token, 'secreto', (err, user) => {
+//        if (err) return res.sendStatus(403);
+//        req.user = user;
+//        next();
+//    });
+//};
+
+//app.get('/dashboard', authenticateToken, (req, res) => {
+//    res.json({ message: 'Bem-vindo ao Dashboard' });
+//});
+
+//app.post('/login', (req, res) => {
+//    const { Email, Senha } = req.body;
+//
+//    const user = db.find(user => user.email === Email);
+//    if (user && bcrypt.compareSync(Senha, user.senha)) {
+//        const token = jwt.sign({ id: user.id }, 'secreto', { expiresIn: '1h' });
+//        return res.json({ token });
+//    }
+//
+//    res.status(401).json({ message: 'Credenciais inválidas' });
+//});
 
 app.listen(3002, () => {
     console.log('Server is running on port 3002');

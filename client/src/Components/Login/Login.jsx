@@ -1,9 +1,33 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './Login.css'
+import {useNavigate} from 'react-router-dom'
+import Axios from 'axios'
 
 import logo from '/img/logowhite.svg'
 
 const Login = () =>{
+
+  const navigate = useNavigate();
+
+  const [email, setLoginEmail] = useState('')
+  const [senha, setLoginSenha] = useState('')
+
+  const loginUser = (event) => {
+      event.preventDefault();
+
+      Axios.post('http://localhost:3002/login', {
+          Email: email,
+          Senha: senha
+
+        }).then((response) => {
+          console.log(response.data.message);
+          navigate('/');
+
+        }).catch((error) => {
+          console.error('Erro ao fazer login:', error);
+        });
+    }
+
     return(
         <div>
         <figure style={{ marginBottom: '26px' }}>
@@ -21,6 +45,7 @@ const Login = () =>{
               id="email"
               placeholder="E-mail ou username"
               required
+              onChange={event => { setLoginEmail(event.target.value) }}
             />
           </div>
           <div className="info" style={{ marginBottom: '10px' }}>
@@ -30,6 +55,7 @@ const Login = () =>{
               id="password"
               placeholder="Senha"
               required
+              onChange={event => { setLoginSenha(event.target.value) }}
             />
           </div>
           <div id="log-links">
@@ -45,6 +71,7 @@ const Login = () =>{
               id="enviar"
               type="submit"
               value="Entrar"
+              onClick={loginUser}
             />
           </div>
         </form>

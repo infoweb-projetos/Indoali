@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Usuário</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+  <header class="p-4 flex items-center justify-between bg-gray-50">
+    <button>
+      <img src="img/voltar.png" alt="Voltar" />
+    </button>
+    <h1 class="text-lg font-bold">Perfil</h1>
+    <button>
+      <img src="img/notif.png" alt="Notificações" />
+    </button>
+  </header>
+  <section class="p-4">
+    <div class="flex items-center justify-between space-x-4">
+      <div class="flex flex-col">
+          <h2 class="text-lg font-semibold text-[#7F6EF2]">Roger Carvalho</h2>
+          <p class="text-base text-[#868686]">@RogerJosilmar</p>
+          <p class="text-xs text-[#FF9500]">Perfil criado em 31/02/2024</p>
+          <button class="mt-2 w-40 py-1 bg-[#7F6EF2] text-white rounded-md text-base">Editar perfil</button>
+      </div>
+      <img class="w-24 h-24 rounded-full" src="img/image (1).png" alt="Foto de perfil">
+  </div>
+    <div class="mt-4">
+      <h3 class="text-[#7F6EF2]">Sobre esse perfil:</h3>
+      <textarea class="w-full mt-2 p-3 border border-[#7F6EF2] rounded-md text-base" readonly>Oi meu nome é Roger eu sou muito legal e eu faço infoweb eu amo comidas e roles</textarea>
+    </div>
+  </section>
+  <section class="p-4">
+    <div class="flex justify-between items-center mb-2">
+      <h3 class="font-bold text-[#7F6EF2]">Amigos</h3>
+      <a href="#" class="text-[#FF9500] text-base">ver mais +</a>
+    </div>
+    <div class="grid grid-cols-5 gap-5">
+      <div class="text-center">
+        <img class="w-12 h-12 rounded-full" src="img/image (1).png" alt="Amigo 1">
+        <p class="text-xs text-[#868686]">@cossito</p>
+      </div>
+      <div class="text-center">
+        <img class="w-12 h-12 rounded-full" src="img/image (1).png" alt="Amigo 2">
+        <p class="text-sm text-[#868686]">@iarao</p>
+      </div>
+      <div class="text-center">
+        <img class="w-12 h-12 rounded-full" src="img/image (1).png" alt="Amigo 3">
+        <p class="text-sm text-[#868686]">@luzia</p>
+      </div>
+      <div class="text-center">
+        <img class="w-12 h-12 rounded-full" src="img/image (1).png" alt="Amigo 4">
+        <p class="text-sm text-[#868686]">@kuabrs</p>
+      </div>
+      <div class="text-center">
+        <img class="w-12 h-12 rounded-full" src="img/image (1).png" alt="Amigo 5">
+        <p class="text-sm text-[#868686]">@loona</p>
+      </div>
+    </div>
+  </section>
+  <section class="p-4">
+    <div class="flex justify-between items-center mb-2">
+      <h3 class="font-bold text-[#7F6EF2]">Seus favoritos</h3>
+      <a href="#" class="text-[#FF9500] text-base">ver mais +</a>
+    </div>
+    <div class="grid grid-cols-5 gap-4">
+      <div class="text-center">
+        <img class="w-12 h-12 rounded-full" src="img/image (1).png" alt="Favorito 1">
+        <p class="text-sm text-[#868686]">Siri Burger</p>
+      </div>
+      <div class="text-center">
+        <img class="w-12 h-12 rounded-full" src="img/image (1).png" alt="Favorito 2">
+        <p class="text-sm text-[#868686]">Bodega do..</p>
+      </div>
+      <div class="text-center">
+        <img class="w-12 h-12 rounded-full" src="img/image (1).png" alt="Favorito 3">
+        <p class="text-sm text-[#868686]">Honorato Sushi</p>
+      </div>
+      <div class="text-center">
+        <img class="w-12 h-12 rounded-full" src="img/image (1).png" alt="Favorito 4">
+        <p class="text-sm text-[#868686]">Parque das..</p>
+      </div>
+      <div class="text-center">
+        <img class="w-12 h-12 rounded-full" src="img/image (1).png" alt="Favorito 5">
+        <p class="text-sm text-[#868686]">Loop</p>
+      </div>
+    </div>
+  </section>
+  <section class="p-4">
+    <div class="grid grid-cols-2 gap-4">
+      <button class="py-2 px-4 bg-white border border-[#7F6EF2] text-[#868686] text-base rounded-md" >Conta</button>
+      <button class="py-2 px-4 bg-white border border-[#7F6EF2] text-[#868686] text-base rounded-md">Endereços</button>
+      <button class="py-2 px-4 bg-white border border-[#7F6EF2] text-[#868686] text-base rounded-md">Configurações</button>
+      <button class="py-2 px-4 bg-white border border-[#7F6EF2] text-[#868686] text-base rounded-md flex items-center justify-center" >Ajuda <img src="img/Vector.svg" alt="Busca"></button>
+    </div>
+  </section>
+  <footer class="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-2">
+    <div class="flex justify-around">
+      <button class="flex flex-col items-center text-[#7F6EF2]">
+        <img src="img/home.png" alt="Início">
+        <span class="text-sm">Início</span>
+      </button>
+      <button class="flex flex-col items-center text-[#7F6EF2]">
+        <img src="img/busca.png" alt="Busca">
+        <span class="text-sm">Busca</span>
+      </button>
+      <button class="flex flex-col items-center text-[#7F6EF2]">
+        <img src="img/planner.png" alt="Planner">
+        <span class="text-sm">Planner</span>
+      </button>
+      <button class="flex flex-col items-center text-[#7F6EF2]">
+        <img src="img/perfil.png" alt="Perfil">
+        <span class="text-sm">Perfil </span>
+      </button>
+    </div>
+  </footer>
+
+</body>
+</html>

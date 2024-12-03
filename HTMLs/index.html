@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>  
+  <meta charset="utf-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Indoalí</title>  
+  <link href="css/carrossel.css" rel="stylesheet" type="text/css"/>
+  <!-- <link href="css/indoali.css" rel="stylesheet" type="text/css"/> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+    <body class="bg-gray-50 pb-12">
+    <header class="p-4 flex items-center justify-between bg-gray-50">
+    <div id = "logo">
+      <figure>
+        <img src = "img/assets/star.png" alt = "Logo do Indoalí">
+      </figure>
+    </div>
+    <h2 class="text-lg font-bold font-[asap] text-center text-[#2F2959]";>Olá, {usuário}!</h2>
+    <div id = "notif">
+      <button>
+        <img src = "img/assets/notif.png" alt = "Notificações">
+      </button>
+    </div>
+    </header>
+    <main class="p-4">
+        <section>
+            <div class="carousel-container relative overflow-hidden rounded-lg shadow-lg max-w-md">
+                <div class="carousel-track">
+                  <!-- Slides do carrossel -->
+                  <div class="carousel-slide min-w-full">
+                    <img src="img/publi/bafafa1.png" alt="Semana do Cinema - Slide 1" class="w-full rounded-lg">
+                  </div>
+                  <div class="carousel-slide min-w-full">
+                    <img src="img/publi/bafafa1.png" alt="Semana do Cinema - Slide 2" class="w-full rounded-lg">
+                  </div>
+                  <div class="carousel-slide min-w-full">
+                    <img src="img/publi/bafafa1.png" alt="Semana do Cinema - Slide 3" class="w-full rounded-lg">
+                  </div>
+                </div>
+            
+                <!-- Indicadores do Carrossel -->
+                <div class="carousel-indicators absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
+                  <span class="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide="0"></span>
+                  <span class="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide="1"></span>
+                  <span class="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide="2"></span>
+                </div>
+              </div>
+            
+              <!-- JavaScript para interação de toque, arrasto com mouse e auto-play -->
+              <script>
+                const track = document.querySelector('.carousel-track');
+                const slides = Array.from(track.children);
+                const indicators = document.querySelectorAll('.carousel-indicator');
+                let currentIndex = 0;
+                let autoPlayInterval;
+            
+                function updateSlidePosition(index) {
+                  const slideWidth = slides[0].getBoundingClientRect().width;
+                  track.style.transform = 'translateX(' + (-slideWidth * index) + 'px)';
+                  indicators.forEach((indicator, i) => {
+                    indicator.classList.toggle('active', i === index);
+                  });
+                  currentIndex = index;
+                }
+            
+                indicators.forEach(indicator => {
+                  indicator.addEventListener('click', () => {
+                    const index = parseInt(indicator.getAttribute('data-slide'));
+                    updateSlidePosition(index);
+                    resetAutoPlay();
+                  });
+                });
+            
+                // Função para avançar para o próximo slide automaticamente
+                function nextSlide() {
+                  if (currentIndex < slides.length - 1) {
+                    updateSlidePosition(currentIndex + 1);
+                  } else {
+                    updateSlidePosition(0); // Volta ao início
+                  }
+                }
+            
+                // Inicia o auto-play a cada 10 segundos
+                function startAutoPlay() {
+                  autoPlayInterval = setInterval(nextSlide, 10000);
+                }
+            
+                // Reinicia o auto-play (usado após interação do usuário)
+                function resetAutoPlay() {
+                  clearInterval(autoPlayInterval);
+                  startAutoPlay();
+                }
+            
+                // Interação de toque e arrasto
+                let startX = 0;
+                let isSwiping = false;
+                let isDragging = false;
+            
+                // Funções para toque (touchscreen)
+                track.addEventListener('touchstart', (e) => {
+                  startX = e.touches[0].clientX;
+                  isSwiping = true;
+                  clearInterval(autoPlayInterval);
+                });
+            
+                track.addEventListener('touchmove', (e) => {
+                  if (!isSwiping) return;
+                  const touchX = e.touches[0].clientX;
+                  const swipeDistance = startX - touchX;
+            
+                  if (swipeDistance > 50) {
+                    nextSlide();
+                    isSwiping = false;
+                  } else if (swipeDistance < -50) {
+                    if (currentIndex > 0) {
+                      updateSlidePosition(currentIndex - 1);
+                    } else {
+                      updateSlidePosition(slides.length - 1);
+                    }
+                    isSwiping = false;
+                  }
+                });
+            
+                track.addEventListener('touchend', () => {
+                  isSwiping = false;
+                  resetAutoPlay();
+                });
+            
+                // Funções para arrasto com o mouse
+                track.addEventListener('mousedown', (e) => {
+                  startX = e.clientX;
+                  isDragging = true;
+                  clearInterval(autoPlayInterval);
+                });
+            
+                track.addEventListener('mousemove', (e) => {
+                  if (!isDragging) return;
+                  const mouseX = e.clientX;
+                  const dragDistance = startX - mouseX;
+            
+                  if (dragDistance > 50) {
+                    nextSlide();
+                    isDragging = false;
+                  } else if (dragDistance < -50) {
+                    if (currentIndex > 0) {
+                      updateSlidePosition(currentIndex - 1);
+                    } else {
+                      updateSlidePosition(slides.length - 1);
+                    }
+                    isDragging = false;
+                  }
+                });
+            
+                track.addEventListener('mouseup', () => {
+                  isDragging = false;
+                  resetAutoPlay();
+                });
+            
+                track.addEventListener('mouseleave', () => {
+                  isDragging = false;
+                });
+            
+                // Inicia o auto-play ao carregar a página
+                startAutoPlay();
+              </script>
+            
+            </section>
+            
+            <div class="flex items-center bg-[#E7E7E7] p-2 rounded-lg shadow-sm mt-6">
+              <input type="text" placeholder="Procurar amigos..." class="w-full bg-[#E7E7E7] text-sm outline-none px-2 text-[#868686]">
+              <button>
+                <img src="img/search.png" alt="Buscar" class="w-5 h-5">
+              </button>
+            </div>
+            
+            <section>
+                <div class="section">
+                <div class="section-header">
+                  <h2>🔥 Em alta!</h2>
+                </div>
+                <div class="carousel" id="carousel-em-alta">
+                <div class="carousel-item">
+                  <img src="./cores.png" alt="Siri Burg">
+                  <p>Siri Burg</p>
+                </div>
+                <div class="carousel-item">
+                  <img src="./cores.png" alt="Pastel de Tangará">
+                  <p>Pastel de Tangará</p>
+                </div>
+                <div class="carousel-item">
+                  <img src="./cores.png" alt="Honorato Sushi">
+                  <p>Honorato Sushi</p>
+                </div>
+                <div class="carousel-item">
+                  <img src="./cores.png" alt="Loop">
+                  <p>Loop</p>
+                </div>
+                <div class="carousel-item">
+                  <img src="./cores.png" alt="Frispy">
+                  <p>Frisson</p>
+                </div>
+                </div>
+                </div>
+            </section>
+            <section>
+                <div class="section">
+                <div class="section-header">
+                  <h2>🔄 Que tal um replay?</h2>
+                  <a href="#">ver mais +</a>
+                </div>
+                <div class="carousel" id="carousel-replay">
+                <div class="carousel-item">
+                  <img src="./cores.png" alt="Game Station">
+                  <p>Game Station</p>
+                </div>
+                <div class="carousel-item">
+                  <img src="./cores.png" alt="Mc Donalds">
+                  <p>Mc Donalds</p>
+                </div>
+                <div class="carousel-item">
+                  <img src="./cores.png" alt="Pará Lanches">
+                  <p>Pará Lanches</p>
+                </div>
+                <div class="carousel-item">
+                  <img src="./cores.png" alt="Scooby Burguer">
+                  <p>Scooby Burguer</p>
+                </div>
+                <div class="carousel-item">
+                  <img src="./cores.png" alt="Cervejaria XYZ">
+                  <p>Cerebros</p>
+                </div>
+                 </div>
+                </div>
+            </section>
+            <section>
+              <div class="section">
+              <div class="section-header">
+                <h2>📍 Pertinho de você</h2>
+                <a href="#">ver mais +</a>
+              </div>
+              <div class="carousel" id="carousel-replay">
+              <div class="carousel-item">
+                <img src="./cores.png" alt="Game Station">
+                <p>Game Station</p>
+              </div>
+              <div class="carousel-item">
+                <img src="./cores.png" alt="Mc Donalds">
+                <p>Mc Donalds</p>
+              </div>
+              <div class="carousel-item">
+                <img src="./cores.png" alt="Pará Lanches">
+                <p>Pará Lanches</p>
+              </div>
+              <div class="carousel-item">
+                <img src="./cores.png" alt="Scooby Burguer">
+                <p>Scooby Burguer</p>
+              </div>
+              <div class="carousel-item">
+                <img src="./cores.png" alt="Cervejaria XYZ">
+                <p>Cerebros</p>
+              </div>
+               </div>
+              </div>
+          </section>
+          <section>
+            <div class="section">
+            <div class="section-header">
+              <h2>💸 Tá liso?</h2>
+              <a href="#">ver mais +</a>
+            </div>
+            <div class="carousel" id="carousel-replay">
+            <div class="carousel-item">
+              <img src="./cores.png" alt="Game Station">
+              <p>Game Station</p>
+            </div>
+            <div class="carousel-item">
+              <img src="./cores.png" alt="Mc Donalds">
+              <p>Mc Donalds</p>
+            </div>
+            <div class="carousel-item">
+              <img src="./cores.png" alt="Pará Lanches">
+              <p>Pará Lanches</p>
+            </div>
+            <div class="carousel-item">
+              <img src="./cores.png" alt="Scooby Burguer">
+              <p>Scooby Burguer</p>
+            </div>
+            <div class="carousel-item">
+              <img src="./cores.png" alt="Cervejaria XYZ">
+              <p>Cerebros</p>
+            </div>
+             </div>
+            </div>
+        </section>
+<script>
+  function enableMouseDrag(carousel) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    carousel.addEventListener('mousedown', (e) => {
+      isDown = true;
+      carousel.classList.add('active');
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+      isDown = false;
+      carousel.classList.remove('active');
+    });
+
+    carousel.addEventListener('mouseup', () => {
+      isDown = false;
+      carousel.classList.remove('active');
+    });
+
+    carousel.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      const walk = (x - startX) * 1.5; // Velocidade de arraste
+      carousel.scrollLeft = scrollLeft - walk;
+    });
+  }
+
+  // Ativando o recurso para todos os carrosséis
+  document.querySelectorAll('.carousel').forEach(enableMouseDrag);
+</script>
+    </section>
+    </main>
+    <footer class="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-2">
+      <div class="flex justify-around">
+        <button class="flex flex-col items-center text-[#7F6EF2]">
+          <img src="img/home.png" alt="Início">
+          <span class="text-sm">Início</span>
+        </button>
+        <button class="flex flex-col items-center text-[#7F6EF2]">
+          <img src="img/busca.png" alt="Busca">
+          <span class="text-sm">Busca</span>
+        </button>
+        <button class="flex flex-col items-center text-[#7F6EF2]">
+          <img src="img/planner.png" alt="Planner">
+          <span class="text-sm">Planner</span>
+        </button>
+        <button class="flex flex-col items-center text-[#7F6EF2]">
+          <img src="img/perfil.png" alt="Perfil">
+          <span class="text-sm">Perfil </span>
+        </button>
+      </div>
+    </footer>
+    </div>
+    </body>
+</html>
